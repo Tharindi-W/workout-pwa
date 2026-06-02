@@ -6,7 +6,7 @@ A mobile-first Progressive Web App for tracking gym sessions with progressive ov
 
 ## Live Demo
 
-[View on Netlify →](https://your-app.netlify.app) <!-- replace with your URL -->
+[View on Netlify →](https://your-app.netlify.app) <!--[ replace with your URL ](https://extraordinary-salmiakki-a8bce7.netlify.app/)-->
 
 ## Features
 

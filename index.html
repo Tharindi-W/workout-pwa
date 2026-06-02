@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Workouts">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Workout Tracker</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1e1e1e;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --accent: #c8f542;
+  --accent2: #a8d422;
+  --text: #f0f0f0;
+  --text2: #888;
+  --text3: #555;
+  --danger: #ff5a5a;
+  --success: #4dde8a;
+  --warn: #f5a623;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; overscroll-behavior: none; }
+input, select, textarea, button { font-family: var(--sans); }
+
+/* LAYOUT */
+.app { display: flex; flex-direction: column; min-height: 100vh; min-height: -webkit-fill-available; }
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+  padding: calc(var(--safe-top) + 14px) 16px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.topbar-title { flex: 1; }
+.topbar-title h1 { font-size: 17px; font-weight: 600; color: var(--text); }
+.topbar-title p { font-size: 12px; color: var(--text2); font-family: var(--mono); margin-top: 1px; }
+.week-btns { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--text); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.icon-btn:active { background: var(--surface); transform: scale(0.94); }
+
+/* SESSION TABS */
+.session-nav {
+  display: flex; gap: 6px; padding: 12px 16px;
+  overflow-x: auto; scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+}
+.session-nav::-webkit-scrollbar { display: none; }
+.stab {
+  flex-shrink: 0; padding: 7px 14px; border-radius: 20px;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.stab.active { background: var(--accent); border-color: var(--accent); color: #0a0a0a; }
+.stab:active { transform: scale(0.95); }
+
+/* MAIN CONTENT */
+.content { flex: 1; padding: 16px 16px calc(var(--safe-bot) + 80px); }
+
+/* EXERCISE CARD */
+.ex-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 10px; overflow: hidden;
+}
+.ex-header {
+  padding: 12px 14px 0;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.ex-name { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.3; }
+.badge {
+  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  border-radius: 10px; letter-spacing: 0.4px; flex-shrink: 0; margin-top: 2px;
+}
+.badge-ss { background: rgba(200,245,66,0.12); color: var(--accent); border: 1px solid rgba(200,245,66,0.2); }
+.badge-cardio { background: rgba(77,222,138,0.12); color: var(--success); border: 1px solid rgba(77,222,138,0.2); }
+.prescribed {
+  margin: 8px 14px 0; padding: 8px 10px;
+  background: var(--surface2); border-radius: var(--radius-sm);
+  font-size: 12px; color: var(--text2); line-height: 1.5;
+  font-family: var(--mono);
+}
+.po-hint {
+  margin: 8px 14px 0; padding: 8px 10px;
+  background: rgba(200,245,66,0.05); border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 11px; color: rgba(200,245,66,0.8); line-height: 1.5;
+}
+
+/* SET GRID */
+.set-section { padding: 10px 14px 0; }
+.set-section-label { font-size: 11px; color: var(--text3); font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+.last-sets { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 8px; }
+.last-set {
+  background: var(--surface2); border-radius: var(--radius-sm);
+  padding: 7px 6px; text-align: center;
+}
+.last-set-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+.last-set-val { font-size: 13px; font-weight: 600; color: var(--text2); font-family: var(--mono); }
+.curr-sets { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.set-col { display: flex; flex-direction: column; gap: 4px; }
+.set-col-label { font-size: 11px; color: var(--text3); text-align: center; font-weight: 500; }
+.set-inputs { display: flex; gap: 4px; }
+.set-inputs input {
+  flex: 1; min-width: 0; padding: 9px 4px; text-align: center;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 14px;
+  font-family: var(--mono); font-weight: 500;
+  transition: border-color 0.15s;
+}
+.set-inputs input:focus { outline: none; border-color: var(--accent); }
+.set-inputs input::placeholder { color: var(--text3); font-size: 12px; }
+.input-sub { display: flex; gap: 4px; }
+.input-sub span { flex: 1; text-align: center; font-size: 10px; color: var(--text3); }
+
+/* NOTES */
+.notes-section { padding: 10px 14px 14px; }
+textarea {
+  width: 100%; padding: 9px 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text2); font-size: 13px;
+  resize: none; min-height: 50px; line-height: 1.5;
+  transition: border-color 0.15s;
+}
+textarea:focus { outline: none; border-color: var(--border2); }
+textarea::placeholder { color: var(--text3); }
+
+/* CARDIO */
+.cardio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px 14px; }
+.cf { display: flex; flex-direction: column; gap: 5px; }
+.cf label { font-size: 11px; color: var(--text3); font-weight: 500; letter-spacing: 0.4px; text-transform: uppercase; }
+.cf input, .cf select {
+  padding: 9px 10px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 14px;
+  font-family: var(--mono); transition: border-color 0.15s;
+}
+.cf input:focus, .cf select:focus { outline: none; border-color: var(--accent); }
+.cf select option { background: var(--surface2); }
+
+/* BOTTOM BAR */
+.bottombar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  padding: 10px 16px calc(var(--safe-bot) + 10px);
+  background: rgba(10,10,10,0.96); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.btn-primary {
+  flex: 1; padding: 14px; border-radius: var(--radius);
+  background: var(--accent); border: none; color: #0a0a0a;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.2px;
+}
+.btn-primary:active { background: var(--accent2); transform: scale(0.97); }
+.btn-secondary {
+  padding: 14px 16px; border-radius: var(--radius);
+  background: var(--surface2); border: 1px solid var(--border2); color: var(--text2);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+}
+.btn-secondary:active { background: var(--surface); transform: scale(0.97); }
+
+/* TOAST */
+.toast {
+  position: fixed; top: calc(var(--safe-top) + 70px); left: 50%; transform: translateX(-50%) translateY(-8px);
+  background: var(--success); color: #0a0a0a; padding: 10px 20px;
+  border-radius: 20px; font-size: 13px; font-weight: 600;
+  opacity: 0; transition: all 0.25s; pointer-events: none; z-index: 200;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* DATA MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-end; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--surface); border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid var(--border2); border-bottom: none;
+  padding: 20px 20px calc(var(--safe-bot) + 20px); width: 100%;
+  transform: translateY(20px); transition: transform 0.25s;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 16px; }
+.modal-btns { display: flex; flex-direction: column; gap: 8px; }
+.modal-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius);
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--text); font-size: 14px; font-weight: 500; cursor: pointer;
+  text-align: left; transition: all 0.15s;
+}
+.modal-btn:active { background: var(--bg); }
+.modal-btn .btn-icon { font-size: 18px; margin-right: 10px; }
+.modal-close {
+  width: 100%; padding: 12px; margin-top: 4px; border-radius: var(--radius);
+  border: none; background: transparent; color: var(--text2);
+  font-size: 14px; cursor: pointer;
+}
+
+/* INSTALL BANNER */
+.install-banner {
+  margin: 0 0 12px; padding: 12px 14px;
+  background: rgba(200,245,66,0.07); border: 1px solid rgba(200,245,66,0.2);
+  border-radius: var(--radius); display: none; align-items: center; gap: 10px;
+}
+.install-banner.show { display: flex; }
+.install-banner p { flex: 1; font-size: 13px; color: rgba(200,245,66,0.9); line-height: 1.4; }
+.install-btn {
+  padding: 7px 13px; border-radius: var(--radius-sm);
+  background: var(--accent); border: none; color: #0a0a0a;
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+
+/* WEEK CHIP */
+.week-chip {
+  display: inline-block; padding: 3px 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; font-size: 12px; color: var(--text2);
+  font-family: var(--mono); margin-bottom: 14px;
+}
+.week-chip.current { border-color: rgba(200,245,66,0.3); color: var(--accent); background: rgba(200,245,66,0.05); }
+
+/* SECTION DIVIDER */
+.section-title {
+  font-size: 11px; font-weight: 600; color: var(--text3);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin: 16px 0 10px; padding-left: 2px;
+}
+
+/* HIDDEN file input */
+#csv-import { display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-title">
+      <h1>Tharindi <span style="color:var(--accent)">Workouts</span></h1>
+      <p id="week-label">Loading...</p>
+    </div>
+    <div class="week-btns">
+      <button class="icon-btn" onclick="changeWeek(-1)" aria-label="Previous week">&#8592;</button>
+      <button class="icon-btn" onclick="changeWeek(1)" aria-label="Next week">&#8594;</button>
+      <button class="icon-btn" onclick="openModal()" aria-label="Data options" style="font-size:18px">&#8942;</button>
+    </div>
+  </div>
+
+  <div class="session-nav" id="session-nav"></div>
+
+  <div class="content" id="content">
+    <div class="install-banner" id="install-banner">
+      <p>Install this app on your home screen for offline access</p>
+      <button class="install-btn" id="install-btn">Install</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <h2>Data &amp; backup</h2>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="exportCSV()">
+        <span class="btn-icon">&#8593;</span>Export all data as CSV
+      </button>
+      <button class="modal-btn" onclick="document.getElementById('csv-import').click()">
+        <span class="btn-icon">&#8595;</span>Import CSV backup
+      </button>
+      <button class="modal-btn" onclick="exportJSON()">
+        <span class="btn-icon">&#128190;</span>Export full backup (JSON)
+      </button>
+      <button class="modal-btn" onclick="document.getElementById('json-import').click()">
+        <span class="btn-icon">&#128257;</span>Restore from JSON backup
+      </button>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<input type="file" id="csv-import" accept=".csv" onchange="importCSV(event)">
+<input type="file" id="json-import" accept=".json" style="display:none" onchange="importJSON(event)">
+
+<div class="bottombar">
+  <button class="btn-secondary" onclick="clearSession()">Clear</button>
+  <button class="btn-primary" onclick="saveSession()">Save session &#10003;</button>
+</div>
+
+<script>
+const SESSIONS = [
+  {
+    id:'s1', label:'S1', title:'Upper body — day 1',
+    exercises:[
+      {id:'db_bench',name:'DB bench press (flat bench)',prescribed:'S1: 7kg×6 / S2-3: 6kg×8',superset:false,
+       seed:[{w:7,r:10},{w:7,r:10},{w:8,r:8}],po:'If set 1 hits 10 reps at 7kg, try 7.5kg next session'},
+      {id:'ohp',name:'Overhead bar shoulder press',prescribed:'S1/2/3: 10 reps at 20kg (or 15kg if heavy)',superset:false,
+       seed:[{w:18,r:10},{w:18,r:10},{w:18,r:10}],po:'You did 18kg — ready to try 20kg'},
+      {id:'rear_delt_machine',name:'Rear delt fly machine',prescribed:'S1/2/3: 12 reps at 9kg',superset:false,
+       seed:[{w:9,r:10},{w:14,r:10},{w:14,r:10}],po:'Jumped to 14kg. Start at 12kg and aim for clean 12 reps'},
+      {id:'lat_narrow',name:'Lat pulldown narrow grip',prescribed:'S1/2/3: 10 reps at 20kg+',superset:false,
+       seed:[{w:23,r:10},{w:23,r:10},{w:25.3,r:10}],po:'25kg on set 3 — try 25kg across all 3 sets next'},
+      {id:'front_raise',name:'DB front raises',prescribed:'S1/2/3: 10 reps each side at 4kg',superset:true,
+       seed:[{w:4,r:10},{w:4,r:10},{w:4,r:10}],po:'Feels easy? Go to 5kg'},
+      {id:'tricep_rope',name:'Tricep rope extension',prescribed:'S1/2/3: 10 reps at 6.8kg',superset:true,
+       seed:[{w:6.8,r:10},{w:6.8,r:10},{w:6.8,r:10}],po:'Consistent at 6.8kg — try 8kg next session'},
+    ]
+  },
+  {
+    id:'s2', label:'S2', title:'Lower body — day 1',
+    exercises:[
+      {id:'smith_squat',name:'Smith machine back squat',prescribed:'S1/2/3/4: 8 reps at 20kg+',superset:false,
+       seed:[],po:'Target 20kg×8 across 4 sets. Focus on depth'},
+      {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 8 reps at 100kg',superset:false,
+       seed:[],po:'100kg×8 all 4 sets. Add 5kg when it feels controlled'},
+      {id:'lunges',name:'DB walking lunges',prescribed:'S1/2/3: 10 each leg at 6kg+',superset:false,
+       seed:[],po:'Go to 8kg when all 3 sets feel steady'},
+      {id:'leg_curl',name:'Leg curl machine',prescribed:'S1/2/3: 12 reps at 23kg',superset:false,
+       seed:[],po:'Add 2kg when you can hit 14 reps on set 1'},
+      {id:'calf_raise',name:'KB calf raise (two KBs)',prescribed:'S1/2/3: 15 reps at 6kg each',superset:false,
+       seed:[],po:'Go to 8kg each when all 3 sets hit 15+ reps'},
+      {id:'leg_raise_floor',name:'Leg raises on floor',prescribed:'S1/2/3: 12 reps bodyweight',superset:false,
+       seed:[],po:'Aim for 15 reps before adding ankle weights'},
+    ]
+  },
+  {
+    id:'s3', label:'S3', title:'Cardio / abs', cardio:true,
+    exercises:[
+      {id:'treadmill',name:'Treadmill',prescribed:'Wk1: 7×sprints, incline 2, spd 8 on/4 off, 30s/1min. Wk2: jog 20min spd 5-6. Alternate each week.',superset:false,seed:[],
+       po:'Track which week type you are on and distance covered each session'},
+    ],
+    abs:true
+  },
+  {
+    id:'s4', label:'S4', title:'Upper body — day 2',
+    exercises:[
+      {id:'incline_db',name:'Incline dumbbell press',prescribed:'S1/2: 7kg / S3: 6kg×15',superset:false,
+       seed:[{w:7,r:10},{w:7,r:10},{w:7,r:10}],po:'Try 8kg for sets 1-2, drop to 7kg for set 3 if needed'},
+      {id:'single_row',name:'Single arm DB row',prescribed:'S1/2/3: 10 reps each arm at 9kg',superset:false,
+       seed:[],po:'Move to 10kg when all 3 sets feel strong on both arms'},
+      {id:'arnold',name:'DB Arnold press',prescribed:'S1/2/3: 10 reps at 4kg',superset:false,
+       seed:[],po:'Go to 5kg when the rotation stays controlled throughout all reps'},
+      {id:'lat_wide',name:'Lat pulldown wide grip',prescribed:'S1/2/3: 10 reps at 20kg',superset:false,
+       seed:[],po:'Add 2.5kg when all 3 sets hit 12+ reps'},
+      {id:'db_rear_delt',name:'DB rear delt fly',prescribed:'S1/2/3: 12 reps at 3kg',superset:false,
+       seed:[],po:'Light by design. Focus on squeeze. Go to 4kg when form is perfect'},
+      {id:'hammer_curl',name:'Hammer curl',prescribed:'S1/2/3: 12 reps at 5kg',superset:false,
+       seed:[],po:'Go to 6kg when all 3 sets hit 14+ reps'},
+      {id:'bench_dips',name:'Bench dips',prescribed:'S1/2/3: 10 reps bodyweight',superset:false,
+       seed:[],po:'Aim for 15 reps then add a plate on lap'},
+    ]
+  },
+  {
+    id:'s5', label:'S5', title:'Lower body — day 2',
+    exercises:[
+      {id:'hip_thrust',name:'Barbell hip thrust',prescribed:'S1: 30kg / S2-4: 35kg',superset:false,
+       seed:[{w:20,r:10},{w:35,r:10},{w:35,r:10}],po:'35kg×10 all sets — try 37.5kg for sets 2-4 next session'},
+      {id:'bulgarian',name:'Bulgarian split squat',prescribed:'S1/2/3: 10 reps each leg at 9kg',superset:false,
+       seed:[{w:9,r:10},{w:9,r:10},{w:9,r:10}],po:'9kg all sets — move to 10kg next session'},
+      {id:'rdl_squat',name:'KB RDL to squat',prescribed:'S1/2/3: 10 reps, last 2 sets add to 20kg',superset:false,
+       seed:[{w:8,r:12},{w:8,r:12},{w:8,r:12}],po:'8kg×12 all sets — ready to go heavier. Try 12kg S1, 16kg S2-3'},
+      {id:'leg_ext',name:'Leg extension machine',prescribed:'S1/2/3: 15 reps at 14kg',superset:false,
+       seed:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],po:'You are above prescribed at 20kg. Push for 12-15 reps at 20kg'},
+      {id:'bicycle_s5',name:'Bicycle crunches',prescribed:'S1/2/3: 20 reps bodyweight',superset:false,
+       seed:[],po:'Add a pause at the top of each rep once 20 reps feels easy'},
+      {id:'wall_sit',name:'Wall sit',prescribed:'S1/2: 30 seconds / S3: to failure',superset:false,
+       seed:[],po:'Log your failure time each week to track endurance progress'},
+    ]
+  }
+];
+
+let currentWeek = 0;
+let activeSession = 's1';
+let allData = {};
+let deferredPrompt = null;
+
+function getWeekStart(offset) {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = (day === 0 ? -6 : 1) - day;
+  const mon = new Date(d);
+  mon.setDate(d.getDate() + diff + offset * 7);
+  mon.setHours(0,0,0,0);
+  return mon;
+}
+
+function getWeekKey(offset) {
+  return getWeekStart(offset).toISOString().split('T')[0];
+}
+
+function getWeekLabel(offset) {
+  const start = getWeekStart(offset);
+  const end = new Date(start); end.setDate(start.getDate() + 6);
+  const fmt = dt => dt.toLocaleDateString('en-AU', {day:'numeric',month:'short'});
+  const label = fmt(start) + ' – ' + fmt(end);
+  if (offset === 0) return 'This week — ' + label;
+  if (offset === -1) return 'Last week — ' + label;
+  if (offset === 1) return 'Next week — ' + label;
+  return label;
+}
+
+function loadData() {
+  try { const s = localStorage.getItem('wt2_data'); if (s) allData = JSON.parse(s); } catch(e) {}
+}
+
+function saveData() {
+  try { localStorage.setItem('wt2_data', JSON.stringify(allData)); } catch(e) {}
+}
+
+function getSD(weekOffset, sessionId) {
+  return (allData[getWeekKey(weekOffset)] || {})[sessionId] || {};
+}
+
+function setSD(weekOffset, sessionId, data) {
+  const wk = getWeekKey(weekOffset);
+  if (!allData[wk]) allData[wk] = {};
+  allData[wk][sessionId] = data;
+  saveData();
+}
+
+function changeWeek(dir) {
+  currentWeek += dir;
+  document.getElementById('week-label').textContent = getWeekLabel(currentWeek);
+  renderSession();
+}
+
+function renderTabs() {
+  document.getElementById('session-nav').innerHTML = SESSIONS.map(s =>
+    `<button class="stab${s.id===activeSession?' active':''}" onclick="setSession('${s.id}')">${s.label}<br><span style="font-size:10px;font-weight:400;opacity:0.75">${s.title.split('—')[0].trim()}</span></button>`
+  ).join('');
+}
+
+function setSession(id) { activeSession = id; renderTabs(); renderSession(); }
+
+function v(id) { return document.getElementById(id); }
+function val(id) { const el = v(id); return el ? el.value : ''; }
+
+function renderSession() {
+  const sess = SESSIONS.find(s => s.id === activeSession);
+  const prevData = getSD(currentWeek - 1, activeSession);
+  const currData = getSD(currentWeek, activeSession);
+  const isCurrentWeek = currentWeek === 0;
+  let html = '';
+
+  html += `<div class="week-chip${isCurrentWeek?' current':''}">${getWeekLabel(currentWeek)}</div>`;
+
+  if (sess.cardio) {
+    const ex = sess.exercises[0];
+    const cd = currData[ex.id] || {};
+    const pd = prevData[ex.id] || {};
+    html += `<div class="section-title">Treadmill</div>
+    <div class="ex-card">
+      <div class="ex-header"><span class="ex-name">${ex.name}</span><span class="badge badge-cardio">Cardio</span></div>
+      <div class="prescribed">${ex.prescribed}</div>
+      <div class="cardio-grid">
+        <div class="cf"><label>Week type</label>
+          <select id="${ex.id}_type">
+            <option value="" ${!cd.type?'selected':''}>Select...</option>
+            <option value="W1 sprints" ${cd.type==='W1 sprints'?'selected':''}>Week 1 — sprints</option>
+            <option value="W2 jog" ${cd.type==='W2 jog'?'selected':''}>Week 2 — jog</option>
+          </select>
+        </div>
+        <div class="cf"><label>Duration (min)</label><input type="number" id="${ex.id}_dur" value="${cd.duration||''}" placeholder="20" inputmode="numeric"></div>
+        <div class="cf"><label>Max speed</label><input type="number" id="${ex.id}_spd" value="${cd.speed||''}" placeholder="8" step="0.5" inputmode="decimal"></div>
+        <div class="cf"><label>Distance (km)</label><input type="number" id="${ex.id}_dist" value="${cd.distance||''}" placeholder="2.5" step="0.1" inputmode="decimal"></div>
+      </div>`;
+    if (pd.distance) html += `<div style="padding:0 14px"><div class="po-hint">Last session: ${pd.type||'?'} — ${pd.distance||'?'}km in ${pd.duration||'?'}min</div></div>`;
+    html += `<div class="po-hint" style="margin:8px 14px">${ex.po}</div>
+      <div class="notes-section"><textarea id="${ex.id}_note" placeholder="Notes for next session...">${cd.note||''}</textarea></div>
+    </div>`;
+
+    const acd = currData.abs || {};
+    html += `<div class="section-title">Abs circuit <span style="color:var(--text3);font-weight:400">(optional)</span></div>
+    <div class="ex-card">
+      <div class="ex-header"><span class="ex-name">3 rounds: leg raises×10 / bicycle×20 / reverse crunch×10 / side plank</span></div>
+      <div class="cardio-grid">
+        <div class="cf"><label>Rounds done</label>
+          <select id="abs_rounds">
+            <option value="" ${!acd.rounds?'selected':''}>—</option>
+            <option value="1" ${acd.rounds==='1'?'selected':''}>1 round</option>
+            <option value="2" ${acd.rounds==='2'?'selected':''}>2 rounds</option>
+            <option value="3" ${acd.rounds==='3'?'selected':''}>3 rounds ✓</option>
+            <option value="skip" ${acd.rounds==='skip'?'selected':''}>Skipped</option>
+          </select>
+        </div>
+        <div class="cf"><label>Side plank (sec)</label><input type="number" id="abs_plank" value="${acd.plank||''}" placeholder="30" inputmode="numeric"></div>
+      </div>
+    </div>`;
+
+  } else {
+    sess.exercises.forEach((ex, idx) => {
+      const cd = currData[ex.id] || { sets:[{},{},{}] };
+      const sets = cd.sets || [{},{},{}];
+      const pd = prevData[ex.id] || { sets:[{},{},{}] };
+      const psets = pd.sets || [{},{},{}];
+
+      const hasSeed = ex.seed && ex.seed.length > 0;
+      const hasPrev = psets.some(s => s.w || s.r);
+      const showLast = hasSeed || hasPrev;
+
+      if (idx === 0 || (idx > 0 && sess.exercises[idx-1].superset !== ex.superset)) {
+        if (ex.superset) html += `<div class="section-title">Superset</div>`;
+        else if (idx > 0) html += `<div class="section-title">Exercises</div>`;
+        else html += `<div class="section-title">Exercises</div>`;
+      }
+
+      html += `<div class="ex-card">
+        <div class="ex-header">
+          <span class="ex-name">${ex.name}</span>
+          ${ex.superset?'<span class="badge badge-ss">Superset</span>':''}
+        </div>
+        <div class="prescribed">${ex.prescribed}</div>`;
+
+      if (showLast) {
+        html += `<div class="set-section">
+          <div class="set-section-label">Last session</div>
+          <div class="last-sets">`;
+        for (let i = 0; i < 3; i++) {
+          let w = '—', r = '—';
+          if (hasPrev && psets[i] && (psets[i].w || psets[i].r)) {
+            w = psets[i].w || '—'; r = psets[i].r || '—';
+          } else if (hasSeed && ex.seed[i]) {
+            w = ex.seed[i].w; r = ex.seed[i].r;
+          }
+          html += `<div class="last-set"><div class="last-set-label">Set ${i+1}</div><div class="last-set-val">${w}×${r}</div></div>`;
+        }
+        html += `</div></div>`;
+      }
+
+      html += `<div class="set-section">
+        <div class="set-section-label">This session</div>
+        <div class="curr-sets">`;
+      for (let i = 0; i < 3; i++) {
+        const sw = sets[i] && sets[i].w ? sets[i].w : '';
+        const sr = sets[i] && sets[i].r ? sets[i].r : '';
+        html += `<div class="set-col">
+          <div class="set-col-label">Set ${i+1}</div>
+          <div class="set-inputs">
+            <input type="number" id="${ex.id}_s${i}_w" value="${sw}" placeholder="kg" step="0.5" inputmode="decimal">
+            <input type="number" id="${ex.id}_s${i}_r" value="${sr}" placeholder="reps" inputmode="numeric">
+          </div>
+          <div class="input-sub"><span>kg</span><span>reps</span></div>
+        </div>`;
+      }
+      html += `</div></div>`;
+
+      if (ex.po) html += `<div class="po-hint" style="margin:8px 14px">${ex.po}</div>`;
+      html += `<div class="notes-section"><textarea id="${ex.id}_note" placeholder="Notes for next session...">${cd.note||''}</textarea></div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('content').innerHTML =
+    document.getElementById('install-banner').outerHTML + html;
+
+  // restore install banner state
+  checkInstallBanner();
+}
+
+function saveSession() {
+  const sess = SESSIONS.find(s => s.id === activeSession);
+  const data = {};
+
+  if (sess.cardio) {
+    const ex = sess.exercises[0];
+    data[ex.id] = {
+      type: val(ex.id+'_type'), duration: val(ex.id+'_dur'),
+      speed: val(ex.id+'_spd'), distance: val(ex.id+'_dist'), note: val(ex.id+'_note')
+    };
+    data.abs = { rounds: val('abs_rounds'), plank: val('abs_plank') };
+  } else {
+    sess.exercises.forEach(ex => {
+      const sets = [];
+      for (let i = 0; i < 3; i++) sets.push({ w: val(ex.id+'_s'+i+'_w'), r: val(ex.id+'_s'+i+'_r') });
+      data[ex.id] = { sets, note: val(ex.id+'_note') };
+    });
+  }
+
+  setSD(currentWeek, activeSession, data);
+  showToast('Session saved ✓');
+}
+
+function clearSession() {
+  if (!confirm('Clear all entries for this session?')) return;
+  setSD(currentWeek, activeSession, {});
+  renderSession();
+  showToast('Cleared');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ---- EXPORT / IMPORT ---- */
+function exportCSV() {
+  closeModal();
+  const rows = [['Week','Session','Exercise','Set','Weight (kg)','Reps','Notes']];
+  Object.keys(allData).sort().forEach(wk => {
+    const sessData = allData[wk];
+    Object.keys(sessData).forEach(sessId => {
+      const sess = SESSIONS.find(s => s.id === sessId);
+      if (!sess) return;
+      const sd = sessData[sessId];
+      if (sess.cardio) {
+        const ex = sess.exercises[0];
+        const cd = sd[ex.id] || {};
+        rows.push([wk, sess.title, ex.name, '1', cd.speed||'', cd.distance||'', `${cd.type||''} ${cd.duration||''}min ${cd.note||''}`]);
+        const abs = sd.abs || {};
+        if (abs.rounds) rows.push([wk, sess.title, 'Abs circuit', '1', '', abs.rounds+' rounds', `plank ${abs.plank||'?'}s`]);
+      } else {
+        sess.exercises.forEach(ex => {
+          const ed = sd[ex.id] || {};
+          const sets = ed.sets || [];
+          sets.forEach((s, i) => {
+            if (s.w || s.r) rows.push([wk, sess.title, ex.name, i+1, s.w||'', s.r||'', i===0?ed.note||'':'']);
+          });
+        });
+      }
+    });
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  download('workout-data-'+new Date().toISOString().split('T')[0]+'.csv', csv, 'text/csv');
+  showToast('CSV exported');
+}
+
+function exportJSON() {
+  closeModal();
+  download('workout-backup-'+new Date().toISOString().split('T')[0]+'.json', JSON.stringify(allData, null, 2), 'application/json');
+  showToast('JSON backup exported');
+}
+
+function importCSV(e) {
+  closeModal();
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => {
+    const lines = evt.target.result.split('\n').slice(1);
+    let imported = 0;
+    lines.forEach(line => {
+      if (!line.trim()) return;
+      const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+      const clean = cols.map(c => c.replace(/^"|"$/g,'').replace(/""/g,'"'));
+      const [wk, sessTitle, exName, setNum, weight, reps, notes] = clean;
+      if (!wk || !sessTitle) return;
+      const sess = SESSIONS.find(s => s.title === sessTitle);
+      if (!sess) return;
+      if (!allData[wk]) allData[wk] = {};
+      if (!allData[wk][sess.id]) allData[wk][sess.id] = {};
+      const sd = allData[wk][sess.id];
+      const ex = sess.exercises.find(x => x.name === exName);
+      if (!ex) return;
+      if (!sd[ex.id]) sd[ex.id] = { sets: [{},{},{}], note: '' };
+      const si = parseInt(setNum) - 1;
+      if (si >= 0 && si < 3) {
+        sd[ex.id].sets[si] = { w: weight, r: reps };
+        if (si === 0 && notes) sd[ex.id].note = notes;
+      }
+      imported++;
+    });
+    saveData();
+    renderSession();
+    showToast(`Imported ${imported} rows`);
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function importJSON(e) {
+  closeModal();
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      allData = parsed;
+      saveData();
+      renderSession();
+      showToast('Backup restored');
+    } catch(err) { showToast('Invalid JSON file'); }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function download(filename, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+/* ---- MODAL ---- */
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
+
+/* ---- PWA INSTALL ---- */
+function checkInstallBanner() {
+  const banner = document.getElementById('install-banner');
+  if (!banner) return;
+  if (deferredPrompt) banner.classList.add('show');
+  else banner.classList.remove('show');
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.onclick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; banner.classList.remove('show'); });
+  };
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredPrompt = e; checkInstallBanner();
+});
+window.addEventListener('appinstalled', () => { deferredPrompt = null; checkInstallBanner(); });
+
+/* ---- INIT ---- */
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+loadData();
+document.getElementById('week-label').textContent = getWeekLabel(0);
+renderTabs();
+renderSession();
+</script>
+</body>
+</html>

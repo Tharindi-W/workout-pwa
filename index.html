@@ -321,9 +321,9 @@ const SESSIONS = [
   {
     id:'s1', label:'S1', title:'Upper body — day 1',
     exercises:[
-      {id:'db_bench',name:'DB bench press (flat bench)',prescribed:'S1: 7kg×6 / S2-3: 6kg×8',superset:false,
-       seed:[{w:7,r:10},{w:7,r:10},{w:8,r:8}],po:'If set 1 hits 10 reps at 7kg, try 7.5kg next session'},
-      {id:'ohp',name:'Overhead bar shoulder press',prescribed:'S1/2/3: 10 reps at 20kg (or 15kg if heavy)',superset:false,
+      {id:'chest_press_s1',name:'Chest press (machine)',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Find a weight you can do for 12 clean reps, then log it'},
+      {id:'ohp',name:'Shoulder press',prescribed:'S1/2/3: 10 reps at 20kg (or 15kg if heavy)',superset:false,
        seed:[{w:18,r:10},{w:18,r:10},{w:18,r:10}],po:'You did 18kg — ready to try 20kg'},
       {id:'rear_delt_machine',name:'Rear delt fly machine',prescribed:'S1/2/3: 12 reps at 9kg',superset:false,
        seed:[{w:9,r:10},{w:14,r:10},{w:14,r:10}],po:'Jumped to 14kg. Start at 12kg and aim for clean 12 reps'},
@@ -333,22 +333,26 @@ const SESSIONS = [
        seed:[{w:4,r:10},{w:4,r:10},{w:4,r:10}],po:'Feels easy? Go to 5kg'},
       {id:'tricep_rope',name:'Tricep rope extension',prescribed:'S1/2/3: 10 reps at 6.8kg',superset:true,
        seed:[{w:6.8,r:10},{w:6.8,r:10},{w:6.8,r:10}],po:'Consistent at 6.8kg — try 8kg next session'},
+      {id:'db_arm_curl',name:'DB arm curl',prescribed:'S1/2/3: 10 reps at 10kg',superset:false,
+       seed:[],po:'Go heavier when all 3 sets hit 10 clean reps at 10kg'},
     ]
   },
   {
     id:'s2', label:'S2', title:'Lower body — day 1',
     exercises:[
-      {id:'smith_squat',name:'Smith machine back squat',prescribed:'S1/2/3/4: 8 reps at 20kg+',superset:false,
+      {id:'smith_squat',name:'Smith machine back squat',prescribed:'S1/2/3/4: 8 reps at 20kg+',superset:false,sets:4,
        seed:[],po:'Target 20kg×8 across 4 sets. Focus on depth'},
-      {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 8 reps at 100kg',superset:false,
+      {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 8 reps at 100kg',superset:false,sets:4,
        seed:[],po:'100kg×8 all 4 sets. Add 5kg when it feels controlled'},
-      {id:'lunges',name:'DB walking lunges',prescribed:'S1/2/3: 10 each leg at 6kg+',superset:false,
-       seed:[],po:'Go to 8kg when all 3 sets feel steady'},
+      {id:'hip_abductor_s2',name:'Hip abductor',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
+      {id:'hip_adductor_s2',name:'Hip adductor',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
       {id:'leg_curl',name:'Leg curl machine',prescribed:'S1/2/3: 12 reps at 23kg',superset:false,
        seed:[],po:'Add 2kg when you can hit 14 reps on set 1'},
-      {id:'calf_raise',name:'KB calf raise (two KBs)',prescribed:'S1/2/3: 15 reps at 6kg each',superset:false,
-       seed:[],po:'Go to 8kg each when all 3 sets hit 15+ reps'},
-      {id:'leg_raise_floor',name:'Leg raises on floor',prescribed:'S1/2/3: 12 reps bodyweight',superset:false,
+      {id:'calf_raise_machine',name:'Calf raises',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Add weight when all 3 sets hit 12+ reps'},
+      {id:'leg_raise_floor',name:'Leg raises on chair',prescribed:'S1/2/3: 12 reps bodyweight',superset:false,
        seed:[],po:'Aim for 15 reps before adding ankle weights'},
     ]
   },
@@ -363,15 +367,15 @@ const SESSIONS = [
   {
     id:'s4', label:'S4', title:'Upper body — day 2',
     exercises:[
-      {id:'incline_db',name:'Incline dumbbell press',prescribed:'S1/2: 7kg / S3: 6kg×15',superset:false,
-       seed:[{w:7,r:10},{w:7,r:10},{w:7,r:10}],po:'Try 8kg for sets 1-2, drop to 7kg for set 3 if needed'},
+      {id:'chest_press_s4',name:'Chest press',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Find a weight you can do for 12 clean reps, then log it'},
       {id:'single_row',name:'Single arm DB row',prescribed:'S1/2/3: 10 reps each arm at 9kg',superset:false,
        seed:[],po:'Move to 10kg when all 3 sets feel strong on both arms'},
       {id:'arnold',name:'DB Arnold press',prescribed:'S1/2/3: 10 reps at 4kg',superset:false,
        seed:[],po:'Go to 5kg when the rotation stays controlled throughout all reps'},
       {id:'lat_wide',name:'Lat pulldown wide grip',prescribed:'S1/2/3: 10 reps at 20kg',superset:false,
        seed:[],po:'Add 2.5kg when all 3 sets hit 12+ reps'},
-      {id:'db_rear_delt',name:'DB rear delt fly',prescribed:'S1/2/3: 12 reps at 3kg',superset:false,
+      {id:'db_rear_delt',name:'Machine rear delt fly',prescribed:'S1/2/3: 12 reps at 3kg',superset:false,
        seed:[],po:'Light by design. Focus on squeeze. Go to 4kg when form is perfect'},
       {id:'hammer_curl',name:'Hammer curl',prescribed:'S1/2/3: 12 reps at 5kg',superset:false,
        seed:[],po:'Go to 6kg when all 3 sets hit 14+ reps'},
@@ -382,7 +386,7 @@ const SESSIONS = [
   {
     id:'s5', label:'S5', title:'Lower body — day 2',
     exercises:[
-      {id:'hip_thrust',name:'Barbell hip thrust',prescribed:'S1: 30kg / S2-4: 35kg',superset:false,
+      {id:'hip_thrust',name:'Hip thrust machine',prescribed:'S1: 30kg / S2-4: 35kg',superset:false,
        seed:[{w:20,r:10},{w:35,r:10},{w:35,r:10}],po:'35kg×10 all sets — try 37.5kg for sets 2-4 next session'},
       {id:'bulgarian',name:'Bulgarian split squat',prescribed:'S1/2/3: 10 reps each leg at 9kg',superset:false,
        seed:[{w:9,r:10},{w:9,r:10},{w:9,r:10}],po:'9kg all sets — move to 10kg next session'},
@@ -390,13 +394,19 @@ const SESSIONS = [
        seed:[{w:8,r:12},{w:8,r:12},{w:8,r:12}],po:'8kg×12 all sets — ready to go heavier. Try 12kg S1, 16kg S2-3'},
       {id:'leg_ext',name:'Leg extension machine',prescribed:'S1/2/3: 15 reps at 14kg',superset:false,
        seed:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],po:'You are above prescribed at 20kg. Push for 12-15 reps at 20kg'},
-      {id:'bicycle_s5',name:'Bicycle crunches',prescribed:'S1/2/3: 20 reps bodyweight',superset:false,
-       seed:[],po:'Add a pause at the top of each rep once 20 reps feels easy'},
+      {id:'leg_raise_chair_s5',name:'Leg raises on chair',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Aim for 15 reps before adding ankle weights'},
+      {id:'hip_abductor_s5',name:'Hip abductor',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
+      {id:'hip_adductor_s5',name:'Hip adductor',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
       {id:'wall_sit',name:'Wall sit',prescribed:'S1/2: 30 seconds / S3: to failure',superset:false,
        seed:[],po:'Log your failure time each week to track endurance progress'},
     ]
   }
 ];
+
+const setCount = ex => ex.sets || 3;
 
 let currentWeek = 0;
 let activeSession = 's1';
@@ -544,7 +554,7 @@ function renderSession() {
         html += `<div class="set-section">
           <div class="set-section-label">Last session</div>
           <div class="last-sets">`;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < setCount(ex); i++) {
           let w = '—', r = '—';
           if (hasPrev && psets[i] && (psets[i].w || psets[i].r)) {
             w = psets[i].w || '—'; r = psets[i].r || '—';
@@ -559,7 +569,7 @@ function renderSession() {
       html += `<div class="set-section">
         <div class="set-section-label">This session</div>
         <div class="curr-sets">`;
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < setCount(ex); i++) {
         const sw = sets[i] && sets[i].w ? sets[i].w : '';
         const sr = sets[i] && sets[i].r ? sets[i].r : '';
         html += `<div class="set-col">
@@ -600,7 +610,7 @@ function saveSession() {
   } else {
     sess.exercises.forEach(ex => {
       const sets = [];
-      for (let i = 0; i < 3; i++) sets.push({ w: val(ex.id+'_s'+i+'_w'), r: val(ex.id+'_s'+i+'_r') });
+      for (let i = 0; i < setCount(ex); i++) sets.push({ w: val(ex.id+'_s'+i+'_w'), r: val(ex.id+'_s'+i+'_r') });
       data[ex.id] = { sets, note: val(ex.id+'_note') };
     });
   }
@@ -682,7 +692,7 @@ function importCSV(e) {
       if (!ex) return;
       if (!sd[ex.id]) sd[ex.id] = { sets: [{},{},{}], note: '' };
       const si = parseInt(setNum) - 1;
-      if (si >= 0 && si < 3) {
+      if (si >= 0 && si < setCount(ex)) {
         sd[ex.id].sets[si] = { w: weight, r: reps };
         if (si === 0 && notes) sd[ex.id].note = notes;
       }

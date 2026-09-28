@@ -535,7 +535,6 @@ function renderSession() {
 
       const hasSeed = ex.seed && ex.seed.length > 0;
       const hasPrev = psets.some(s => s.w || s.r);
-      const showLast = hasSeed || hasPrev;
 
       if (idx === 0 || (idx > 0 && sess.exercises[idx-1].superset !== ex.superset)) {
         if (ex.superset) html += `<div class="section-title">Superset</div>`;
@@ -550,21 +549,19 @@ function renderSession() {
         </div>
         <div class="prescribed">${ex.prescribed}</div>`;
 
-      if (showLast) {
-        html += `<div class="set-section">
-          <div class="set-section-label">Last session</div>
-          <div class="last-sets">`;
-        for (let i = 0; i < setCount(ex); i++) {
-          let w = '—', r = '—';
-          if (hasPrev && psets[i] && (psets[i].w || psets[i].r)) {
-            w = psets[i].w || '—'; r = psets[i].r || '—';
-          } else if (hasSeed && ex.seed[i]) {
-            w = ex.seed[i].w; r = ex.seed[i].r;
-          }
-          html += `<div class="last-set"><div class="last-set-label">Set ${i+1}</div><div class="last-set-val">${w}×${r}</div></div>`;
+      html += `<div class="set-section">
+        <div class="set-section-label">Last session</div>
+        <div class="last-sets">`;
+      for (let i = 0; i < setCount(ex); i++) {
+        let w = '—', r = '—';
+        if (hasPrev && psets[i] && (psets[i].w || psets[i].r)) {
+          w = psets[i].w || '—'; r = psets[i].r || '—';
+        } else if (hasSeed && ex.seed[i]) {
+          w = ex.seed[i].w; r = ex.seed[i].r;
         }
-        html += `</div></div>`;
+        html += `<div class="last-set"><div class="last-set-label">Set ${i+1}</div><div class="last-set-val">${w}×${r}</div></div>`;
       }
+      html += `</div></div>`;
 
       html += `<div class="set-section">
         <div class="set-section-label">This session</div>

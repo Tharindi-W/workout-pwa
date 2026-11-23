@@ -9,7 +9,7 @@ A mobile-first Progressive Web App for tracking gym sessions with progressive ov
 https://extraordinary-salmiakki-a8bce7.netlify.app/
 ## Features
 
-- **5 workout sessions** — 2 upper body, 2 lower body, 1 cardio/abs
+- **5 workout sessions** — 2 upper body, 2 lower body, 1 cardio/core
 - **Progressive overload tracking** — last session's sets shown alongside current for every exercise
 - **Week navigation** — browse any past or future week
 - **Overload hints** — per-exercise guidance on when to increase weight based on rep ranges
@@ -87,10 +87,12 @@ All data is stored in the browser's `localStorage`. Use the in-app menu (⋮) to
 | Session | Focus |
 |---|---|
 | Session 1 | Upper body day 1 — bench, shoulder press, lat pulldown, rear delt, supersets |
-| Session 2 | Lower body day 1 — squats, leg press, lunges, leg curl, calves |
-| Session 3 | Cardio + abs — treadmill sprints / jog alternating weekly, optional abs circuit |
-| Session 4 | Upper body day 2 — incline press, rows, Arnold press, pulldown, curls |
-| Session 5 | Lower body day 2 — hip thrust, Bulgarian split squat, RDL, leg extension |
+| Session 2 | Lower body day 1 — goblet squat, leg press, hip abductor, leg curl, calves |
+| Session 3 | Cardio + core — 20 min bike, 10 min stair stepper, leg raises, planks, Pallof press, optional farmer carry |
+| Session 4 | Upper body day 2 — chest press, rows, Arnold press, pulldown, curls, overhead tricep extension |
+| Session 5 | Lower body day 2 — hip thrust, Bulgarian split squat, RDL, leg extension, hip abductor/adductor, cable kickback |
+
+Every session also has an optional **dead hang** tracker (seconds per attempt, goal 60 sec) toward a first pull-up.
 
 ## Progressive Overload Logic
 

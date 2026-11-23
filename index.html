@@ -340,13 +340,11 @@ const SESSIONS = [
   {
     id:'s2', label:'S2', title:'Lower body — day 1',
     exercises:[
-      {id:'smith_squat',name:'Smith machine back squat',prescribed:'S1/2/3/4: 8 reps at 20kg+',superset:false,sets:4,
-       seed:[],po:'Target 20kg×8 across 4 sets. Focus on depth'},
+      {id:'goblet_squat',name:'Goblet squat (DB or KB)',prescribed:'S1/2/3/4: 10 reps. Start around 12-16kg',superset:false,sets:4,
+       seed:[],po:'Weight held at your chest, so nothing sits on your spine. Add 2kg when all 4 sets hit 10. If the gym has a hack squat or belt squat machine, swap to that once dumbbells get too heavy to hold'},
       {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 8 reps at 100kg',superset:false,sets:4,
        seed:[],po:'100kg×8 all 4 sets. Add 5kg when it feels controlled'},
       {id:'hip_abductor_s2',name:'Hip abductor',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
-      {id:'hip_adductor_s2',name:'Hip adductor',prescribed:'S1/2/3: 12 reps',superset:false,
        seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
       {id:'leg_curl',name:'Leg curl machine',prescribed:'S1/2/3: 12 reps at 23kg',superset:false,
        seed:[],po:'Add 2kg when you can hit 14 reps on set 1'},
@@ -357,12 +355,26 @@ const SESSIONS = [
     ]
   },
   {
-    id:'s3', label:'S3', title:'Cardio / abs', cardio:true,
+    id:'s3', label:'S3', title:'Cardio / core',
     exercises:[
-      {id:'treadmill',name:'Treadmill',prescribed:'Wk1: 7×sprints, incline 2, spd 8 on/4 off, 30s/1min. Wk2: jog 20min spd 5-6. Alternate each week.',superset:false,seed:[],
-       po:'Track which week type you are on and distance covered each session'},
-    ],
-    abs:true
+      {id:'bike',name:'Bike — 20 min',prescribed:'20 min. Log the highest and lowest resistance level you used',superset:false,sets:1,
+       fields:[{k:'max',label:'max res',step:'1'},{k:'min',label:'min res',step:'1'}],
+       seed:[],po:'Try to raise your max or your min by 1 level each week'},
+      {id:'stepper',name:'Stair stepper — 10 min',prescribed:'10 min. Log the step speed level and total steps',superset:false,sets:1,
+       fields:[{k:'lvl',label:'speed lvl',step:'1'},{k:'steps',label:'total steps',step:'1'}],
+       seed:[],po:'Beat last week\'s total steps. Hands off the rails if you can'},
+      {id:'leg_raise_s3',name:'Leg raises',prescribed:'S1/2/3: 20 reps',superset:false,
+       fields:[{k:'r',label:'reps',step:'1'}],
+       seed:[],po:'Lower back stays pressed down. Slow on the way down'},
+      {id:'plank',name:'Plank',prescribed:'S1/2/3: hold as long as you can. Log plate weight on your back (0 if none)',superset:false,
+       fields:[{k:'w',label:'kg',step:'0.5'},{k:'s',label:'sec',step:'1'}],
+       seed:[],po:'Once you hold 60 sec on all 3, add a 5kg plate on your back'},
+      {id:'pallof',name:'Pallof press',prescribed:'S1/2/3: 10 reps each side at 9.1kg',superset:false,
+       seed:[],po:'Add weight when all 3 sets feel solid without your hips twisting'},
+      {id:'farmer_carry',name:'Farmer carry (optional)',prescribed:'S1/2/3: walk holding heavy DBs, log kg each hand and seconds',superset:false,
+       fields:[{k:'w',label:'kg',step:'0.5'},{k:'s',label:'sec',step:'1'}],
+       seed:[],po:'Builds grip for your dead hang and works the whole core. Aim for 40 sec, then go heavier'},
+    ]
   },
   {
     id:'s4', label:'S4', title:'Upper body — day 2',
@@ -379,8 +391,8 @@ const SESSIONS = [
        seed:[],po:'Light by design. Focus on squeeze. Go to 4kg when form is perfect'},
       {id:'hammer_curl',name:'Hammer curl',prescribed:'S1/2/3: 12 reps at 5kg',superset:false,
        seed:[],po:'Go to 6kg when all 3 sets hit 14+ reps'},
-      {id:'bench_dips',name:'Bench dips',prescribed:'S1/2/3: 10 reps bodyweight',superset:false,
-       seed:[],po:'Aim for 15 reps then add a plate on lap'},
+      {id:'oh_tricep',name:'Overhead cable tricep extension',prescribed:'S1/2/3: 12 reps',superset:false,
+       seed:[],po:'Replaces bench dips (hard on the shoulders). Add weight when all 3 sets hit 12'},
     ]
   },
   {
@@ -390,8 +402,8 @@ const SESSIONS = [
        seed:[{w:20,r:10},{w:35,r:10},{w:35,r:10}],po:'35kg×10 all sets — try 37.5kg for sets 2-4 next session'},
       {id:'bulgarian',name:'Bulgarian split squat',prescribed:'S1/2/3: 10 reps each leg at 9kg',superset:false,
        seed:[{w:9,r:10},{w:9,r:10},{w:9,r:10}],po:'9kg all sets — move to 10kg next session'},
-      {id:'rdl_squat',name:'KB RDL to squat',prescribed:'S1/2/3: 10 reps, last 2 sets add to 20kg',superset:false,
-       seed:[{w:8,r:12},{w:8,r:12},{w:8,r:12}],po:'8kg×12 all sets — ready to go heavier. Try 12kg S1, 16kg S2-3'},
+      {id:'kb_rdl',name:'KB / DB Romanian deadlift',prescribed:'S1/2/3: 10 reps. Start at 12kg, work up to 16-20kg',superset:false,
+       seed:[],po:'RDL on its own now (no squat). You did 8kg×12 on the combo, so go heavier. Add 2kg when all 3 sets hit 10. If grip gives out first, use lifting straps'},
       {id:'leg_ext',name:'Leg extension machine',prescribed:'S1/2/3: 15 reps at 14kg',superset:false,
        seed:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],po:'You are above prescribed at 20kg. Push for 12-15 reps at 20kg'},
       {id:'leg_raise_chair_s5',name:'Leg raises on chair',prescribed:'S1/2/3: 12 reps',superset:false,
@@ -400,13 +412,29 @@ const SESSIONS = [
        seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
       {id:'hip_adductor_s5',name:'Hip adductor',prescribed:'S1/2/3: 12 reps',superset:false,
        seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
-      {id:'wall_sit',name:'Wall sit',prescribed:'S1/2: 30 seconds / S3: to failure',superset:false,
-       seed:[],po:'Log your failure time each week to track endurance progress'},
+      {id:'cable_kickback',name:'Cable glute kickback',prescribed:'S1/2/3: 12 reps each leg',superset:false,
+       seed:[],po:'Replaces wall sit. Squeeze at the top, no swinging. Add weight when all 3 sets hit 12'},
     ]
   }
 ];
 
 const setCount = ex => ex.sets || 3;
+const DEFAULT_FIELDS = [{k:'w',label:'kg',step:'0.5'},{k:'r',label:'reps',step:'1'}];
+const fieldsOf = ex => ex.fields || DEFAULT_FIELDS;
+
+const HANG = {id:'dead_hang',name:'Dead hang (optional)',prescribed:'Hang from the pull-up bar as long as you can. Goal: 60 sec',superset:false,
+  fields:[{k:'s',label:'sec',step:'1'}],seed:[],po:''};
+const HANG_BASELINE = 24;
+const exercisesOf = sess => sess.exercises.concat([HANG]);
+
+function bestHang() {
+  let best = HANG_BASELINE;
+  Object.values(allData).forEach(wk => Object.values(wk || {}).forEach(sd => {
+    const h = sd && sd.dead_hang;
+    (h && h.sets || []).forEach(x => { const n = parseFloat(x.s); if (n > best) best = n; });
+  }));
+  return best;
+}
 
 let currentWeek = 0;
 let activeSession = 's1';
@@ -483,108 +511,64 @@ function renderSession() {
 
   html += `<div class="week-chip${isCurrentWeek?' current':''}">${getWeekLabel(currentWeek)}</div>`;
 
-  if (sess.cardio) {
-    const ex = sess.exercises[0];
+  exercisesOf(sess).forEach((ex, idx, list) => {
+    const fields = fieldsOf(ex);
     const cd = currData[ex.id] || {};
+    const sets = cd.sets || [];
     const pd = prevData[ex.id] || {};
-    html += `<div class="section-title">Treadmill</div>
-    <div class="ex-card">
-      <div class="ex-header"><span class="ex-name">${ex.name}</span><span class="badge badge-cardio">Cardio</span></div>
-      <div class="prescribed">${ex.prescribed}</div>
-      <div class="cardio-grid">
-        <div class="cf"><label>Week type</label>
-          <select id="${ex.id}_type">
-            <option value="" ${!cd.type?'selected':''}>Select...</option>
-            <option value="W1 sprints" ${cd.type==='W1 sprints'?'selected':''}>Week 1 — sprints</option>
-            <option value="W2 jog" ${cd.type==='W2 jog'?'selected':''}>Week 2 — jog</option>
-          </select>
-        </div>
-        <div class="cf"><label>Duration (min)</label><input type="number" id="${ex.id}_dur" value="${cd.duration||''}" placeholder="20" inputmode="numeric"></div>
-        <div class="cf"><label>Max speed</label><input type="number" id="${ex.id}_spd" value="${cd.speed||''}" placeholder="8" step="0.5" inputmode="decimal"></div>
-        <div class="cf"><label>Distance (km)</label><input type="number" id="${ex.id}_dist" value="${cd.distance||''}" placeholder="2.5" step="0.1" inputmode="decimal"></div>
-      </div>`;
-    if (pd.distance) html += `<div style="padding:0 14px"><div class="po-hint">Last session: ${pd.type||'?'} — ${pd.distance||'?'}km in ${pd.duration||'?'}min</div></div>`;
-    html += `<div class="po-hint" style="margin:8px 14px">${ex.po}</div>
-      <div class="notes-section"><textarea id="${ex.id}_note" placeholder="Notes for next session...">${cd.note||''}</textarea></div>
-    </div>`;
+    const psets = pd.sets || [];
+    const hasSeed = ex.seed && ex.seed.length > 0;
+    const filled = x => x && fields.some(f => x[f.k]);
+    const hasPrev = psets.some(filled);
 
-    const acd = currData.abs || {};
-    html += `<div class="section-title">Abs circuit <span style="color:var(--text3);font-weight:400">(optional)</span></div>
-    <div class="ex-card">
-      <div class="ex-header"><span class="ex-name">3 rounds: leg raises×10 / bicycle×20 / reverse crunch×10 / side plank</span></div>
-      <div class="cardio-grid">
-        <div class="cf"><label>Rounds done</label>
-          <select id="abs_rounds">
-            <option value="" ${!acd.rounds?'selected':''}>—</option>
-            <option value="1" ${acd.rounds==='1'?'selected':''}>1 round</option>
-            <option value="2" ${acd.rounds==='2'?'selected':''}>2 rounds</option>
-            <option value="3" ${acd.rounds==='3'?'selected':''}>3 rounds ✓</option>
-            <option value="skip" ${acd.rounds==='skip'?'selected':''}>Skipped</option>
-          </select>
-        </div>
-        <div class="cf"><label>Side plank (sec)</label><input type="number" id="abs_plank" value="${acd.plank||''}" placeholder="30" inputmode="numeric"></div>
+    if (ex.id === HANG.id) html += `<div class="section-title">Pull-up progress</div>`;
+    else if (idx === 0 || list[idx-1].superset !== ex.superset)
+      html += `<div class="section-title">${ex.superset ? 'Superset' : 'Exercises'}</div>`;
+
+    html += `<div class="ex-card">
+      <div class="ex-header">
+        <span class="ex-name">${ex.name}</span>
+        ${ex.superset?'<span class="badge badge-ss">Superset</span>':''}
       </div>
-    </div>`;
+      <div class="prescribed">${ex.prescribed}</div>`;
 
-  } else {
-    sess.exercises.forEach((ex, idx) => {
-      const cd = currData[ex.id] || { sets:[{},{},{}] };
-      const sets = cd.sets || [{},{},{}];
-      const pd = prevData[ex.id] || { sets:[{},{},{}] };
-      const psets = pd.sets || [{},{},{}];
+    html += `<div class="set-section">
+      <div class="set-section-label">Last session</div>
+      <div class="last-sets">`;
+    for (let i = 0; i < setCount(ex); i++) {
+      let vals = fields.map(() => '—');
+      if (hasPrev && filled(psets[i])) vals = fields.map(f => psets[i][f.k] || '—');
+      else if (hasSeed && ex.seed[i]) vals = fields.map(f => ex.seed[i][f.k] ?? '—');
+      const txt = fields.length === 1 ? vals[0] + ' ' + fields[0].label
+        : (fields === DEFAULT_FIELDS ? vals.join('×') : vals.map((x,j) => x + ' ' + fields[j].label).join(' · '));
+      html += `<div class="last-set"><div class="last-set-label">Set ${i+1}</div><div class="last-set-val">${txt}</div></div>`;
+    }
+    html += `</div></div>`;
 
-      const hasSeed = ex.seed && ex.seed.length > 0;
-      const hasPrev = psets.some(s => s.w || s.r);
-
-      if (idx === 0 || (idx > 0 && sess.exercises[idx-1].superset !== ex.superset)) {
-        if (ex.superset) html += `<div class="section-title">Superset</div>`;
-        else if (idx > 0) html += `<div class="section-title">Exercises</div>`;
-        else html += `<div class="section-title">Exercises</div>`;
-      }
-
-      html += `<div class="ex-card">
-        <div class="ex-header">
-          <span class="ex-name">${ex.name}</span>
-          ${ex.superset?'<span class="badge badge-ss">Superset</span>':''}
-        </div>
-        <div class="prescribed">${ex.prescribed}</div>`;
-
-      html += `<div class="set-section">
-        <div class="set-section-label">Last session</div>
-        <div class="last-sets">`;
-      for (let i = 0; i < setCount(ex); i++) {
-        let w = '—', r = '—';
-        if (hasPrev && psets[i] && (psets[i].w || psets[i].r)) {
-          w = psets[i].w || '—'; r = psets[i].r || '—';
-        } else if (hasSeed && ex.seed[i]) {
-          w = ex.seed[i].w; r = ex.seed[i].r;
-        }
-        html += `<div class="last-set"><div class="last-set-label">Set ${i+1}</div><div class="last-set-val">${w}×${r}</div></div>`;
-      }
-      html += `</div></div>`;
-
-      html += `<div class="set-section">
-        <div class="set-section-label">This session</div>
-        <div class="curr-sets">`;
-      for (let i = 0; i < setCount(ex); i++) {
-        const sw = sets[i] && sets[i].w ? sets[i].w : '';
-        const sr = sets[i] && sets[i].r ? sets[i].r : '';
-        html += `<div class="set-col">
-          <div class="set-col-label">Set ${i+1}</div>
-          <div class="set-inputs">
-            <input type="number" id="${ex.id}_s${i}_w" value="${sw}" placeholder="kg" step="0.5" inputmode="decimal">
-            <input type="number" id="${ex.id}_s${i}_r" value="${sr}" placeholder="reps" inputmode="numeric">
-          </div>
-          <div class="input-sub"><span>kg</span><span>reps</span></div>
-        </div>`;
-      }
-      html += `</div></div>`;
-
-      if (ex.po) html += `<div class="po-hint" style="margin:8px 14px">${ex.po}</div>`;
-      html += `<div class="notes-section"><textarea id="${ex.id}_note" placeholder="Notes for next session...">${cd.note||''}</textarea></div>
+    html += `<div class="set-section">
+      <div class="set-section-label">This session</div>
+      <div class="curr-sets">`;
+    for (let i = 0; i < setCount(ex); i++) {
+      html += `<div class="set-col">
+        <div class="set-col-label">${setCount(ex) > 1 ? 'Set ' + (i+1) : ''}</div>
+        <div class="set-inputs">`;
+      fields.forEach(f => {
+        const fv = sets[i] && sets[i][f.k] ? sets[i][f.k] : '';
+        html += `<input type="number" id="${ex.id}_s${i}_${f.k}" value="${fv}" placeholder="${f.label}" step="${f.step||'1'}" inputmode="decimal">`;
+      });
+      html += `</div>
+        <div class="input-sub">${fields.map(f => `<span>${f.label}</span>`).join('')}</div>
       </div>`;
-    });
-  }
+    }
+    html += `</div></div>`;
+
+    if (ex.id === HANG.id) {
+      const best = bestHang();
+      html += `<div class="po-hint" style="margin:8px 14px">Best so far: ${best} sec · Goal: 60 sec (${Math.min(100, Math.round(best/60*100))}%)</div>`;
+    } else if (ex.po) html += `<div class="po-hint" style="margin:8px 14px">${ex.po}</div>`;
+    html += `<div class="notes-section"><textarea id="${ex.id}_note" placeholder="Notes for next session...">${cd.note||''}</textarea></div>
+    </div>`;
+  });
 
   document.getElementById('content').innerHTML =
     document.getElementById('install-banner').outerHTML + html;
@@ -596,22 +580,15 @@ function renderSession() {
 function saveSession() {
   const sess = SESSIONS.find(s => s.id === activeSession);
   const data = {};
-
-  if (sess.cardio) {
-    const ex = sess.exercises[0];
-    data[ex.id] = {
-      type: val(ex.id+'_type'), duration: val(ex.id+'_dur'),
-      speed: val(ex.id+'_spd'), distance: val(ex.id+'_dist'), note: val(ex.id+'_note')
-    };
-    data.abs = { rounds: val('abs_rounds'), plank: val('abs_plank') };
-  } else {
-    sess.exercises.forEach(ex => {
-      const sets = [];
-      for (let i = 0; i < setCount(ex); i++) sets.push({ w: val(ex.id+'_s'+i+'_w'), r: val(ex.id+'_s'+i+'_r') });
-      data[ex.id] = { sets, note: val(ex.id+'_note') };
-    });
-  }
-
+  exercisesOf(sess).forEach(ex => {
+    const sets = [];
+    for (let i = 0; i < setCount(ex); i++) {
+      const o = {};
+      fieldsOf(ex).forEach(f => { o[f.k] = val(ex.id+'_s'+i+'_'+f.k); });
+      sets.push(o);
+    }
+    data[ex.id] = { sets, note: val(ex.id+'_note') };
+  });
   setSD(currentWeek, activeSession, data);
   showToast('Session saved ✓');
 }
@@ -632,28 +609,21 @@ function showToast(msg) {
 /* ---- EXPORT / IMPORT ---- */
 function exportCSV() {
   closeModal();
-  const rows = [['Week','Session','Exercise','Set','Weight (kg)','Reps','Notes']];
+  const rows = [['Week','Session','Exercise','Set','Weight (kg)','Reps','Other','Notes']];
   Object.keys(allData).sort().forEach(wk => {
     const sessData = allData[wk];
     Object.keys(sessData).forEach(sessId => {
       const sess = SESSIONS.find(s => s.id === sessId);
       if (!sess) return;
       const sd = sessData[sessId];
-      if (sess.cardio) {
-        const ex = sess.exercises[0];
-        const cd = sd[ex.id] || {};
-        rows.push([wk, sess.title, ex.name, '1', cd.speed||'', cd.distance||'', `${cd.type||''} ${cd.duration||''}min ${cd.note||''}`]);
-        const abs = sd.abs || {};
-        if (abs.rounds) rows.push([wk, sess.title, 'Abs circuit', '1', '', abs.rounds+' rounds', `plank ${abs.plank||'?'}s`]);
-      } else {
-        sess.exercises.forEach(ex => {
-          const ed = sd[ex.id] || {};
-          const sets = ed.sets || [];
-          sets.forEach((s, i) => {
-            if (s.w || s.r) rows.push([wk, sess.title, ex.name, i+1, s.w||'', s.r||'', i===0?ed.note||'':'']);
-          });
+      exercisesOf(sess).forEach(ex => {
+        const ed = sd[ex.id] || {};
+        (ed.sets || []).forEach((st, i) => {
+          if (!Object.values(st).some(x => x)) return;
+          const other = Object.keys(st).filter(k => k !== 'w' && k !== 'r' && st[k]).map(k => k+'='+st[k]).join(';');
+          rows.push([wk, sess.title, ex.name, i+1, st.w||'', st.r||'', other, i===0?ed.note||'':'']);
         });
-      }
+      });
     });
   });
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
@@ -672,25 +642,33 @@ function importCSV(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = evt => {
-    const lines = evt.target.result.split('\n').slice(1);
+    const all = evt.target.result.split('\n');
+    const hasOther = all[0].includes('Other');
+    const lines = all.slice(1);
     let imported = 0;
     lines.forEach(line => {
       if (!line.trim()) return;
       const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
       const clean = cols.map(c => c.replace(/^"|"$/g,'').replace(/""/g,'"'));
-      const [wk, sessTitle, exName, setNum, weight, reps, notes] = clean;
+      const [wk, sessTitle, exName, setNum, weight, reps] = clean;
+      const other = hasOther ? clean[6] : '';
+      const notes = hasOther ? clean[7] : clean[6];
       if (!wk || !sessTitle) return;
       const sess = SESSIONS.find(s => s.title === sessTitle);
       if (!sess) return;
       if (!allData[wk]) allData[wk] = {};
       if (!allData[wk][sess.id]) allData[wk][sess.id] = {};
       const sd = allData[wk][sess.id];
-      const ex = sess.exercises.find(x => x.name === exName);
+      const ex = exercisesOf(sess).find(x => x.name === exName);
       if (!ex) return;
-      if (!sd[ex.id]) sd[ex.id] = { sets: [{},{},{}], note: '' };
+      if (!sd[ex.id]) sd[ex.id] = { sets: [], note: '' };
       const si = parseInt(setNum) - 1;
       if (si >= 0 && si < setCount(ex)) {
-        sd[ex.id].sets[si] = { w: weight, r: reps };
+        const st = {};
+        if (weight) st.w = weight;
+        if (reps) st.r = reps;
+        (other || '').split(';').forEach(kv => { const [k, x] = kv.split('='); if (k && x) st[k] = x; });
+        sd[ex.id].sets[si] = st;
         if (si === 0 && notes) sd[ex.id].note = notes;
       }
       imported++;

@@ -321,45 +321,49 @@ const SESSIONS = [
   {
     id:'s1', label:'S1', title:'Upper body — day 1',
     exercises:[
-      {id:'chest_press_s1',name:'Chest press (machine)',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Find a weight you can do for 12 clean reps, then log it'},
-      {id:'ohp',name:'Shoulder press',prescribed:'S1/2/3: 10 reps at 20kg (or 15kg if heavy)',superset:false,
-       seed:[{w:18,r:10},{w:18,r:10},{w:18,r:10}],po:'You did 18kg — ready to try 20kg'},
-      {id:'rear_delt_machine',name:'Rear delt fly machine',prescribed:'S1/2/3: 12 reps at 9kg',superset:false,
-       seed:[{w:9,r:10},{w:14,r:10},{w:14,r:10}],po:'Jumped to 14kg. Start at 12kg and aim for clean 12 reps'},
-      {id:'lat_narrow',name:'Lat pulldown narrow grip',prescribed:'S1/2/3: 10 reps at 20kg+',superset:false,
-       seed:[{w:23,r:10},{w:23,r:10},{w:25.3,r:10}],po:'25kg on set 3 — try 25kg across all 3 sets next'},
-      {id:'front_raise',name:'DB front raises',prescribed:'S1/2/3: 10 reps each side at 4kg',superset:true,
-       seed:[{w:4,r:10},{w:4,r:10},{w:4,r:10}],po:'Feels easy? Go to 5kg'},
-      {id:'tricep_rope',name:'Tricep rope extension',prescribed:'S1/2/3: 10 reps at 6.8kg',superset:true,
-       seed:[{w:6.8,r:10},{w:6.8,r:10},{w:6.8,r:10}],po:'Consistent at 6.8kg — try 8kg next session'},
-      {id:'db_arm_curl',name:'DB arm curl',prescribed:'S1/2/3: 10 reps at 10kg',superset:false,
-       seed:[],po:'Go heavier when all 3 sets hit 10 clean reps at 10kg'},
+      {id:'chest_press_s1',name:'Chest press (machine)',prescribed:'S1/2/3: 10-12 reps at 19.1kg',superset:false,
+       seed:[{w:19.1,r:10},{w:19.1,r:10},{w:19.1,r:10}],po:'19.1kg×10 on all 3. Push for 12 reps, then go to 20.3kg'},
+      {id:'ohp',name:'Shoulder press',prescribed:'S1/2/3: 10 reps at 15.1kg',superset:false,
+       seed:[{w:15.1,r:10},{w:15.1,r:8},{w:15.1,r:10}],po:'Set 2 dropped to 8. Stay at 15.1kg until all 3 sets hit 10'},
+      {id:'rear_delt_machine',name:'Rear delt fly machine',prescribed:'S1/2/3: 10-12 reps at 16.3kg',superset:false,
+       seed:[{w:16.3,r:10},{w:16.3,r:10},{w:16.3,r:10}],po:'16.3kg×10 on all 3. Aim for 12 before going heavier'},
+      {id:'lat_narrow',name:'Lat pulldown narrow grip',prescribed:'S1/2/3: 10 reps at 29kg',superset:false,
+       seed:[{w:29,r:10},{w:29,r:10},{w:29,r:9}],po:'29kg×10,10,9. One more rep on set 3 and you own this weight'},
+      {id:'front_raise',name:'DB front raises',prescribed:'S1/2/3: 10-12 reps each side at 5kg',superset:true,
+       seed:[{w:5,r:10},{w:5,r:10},{w:5,r:10}],po:'5kg×10 on all 3. Aim for 12 before moving up'},
+      {id:'tricep_rope',name:'Tricep rope extension',prescribed:'S1/2/3: 10 reps at 9.1kg',superset:true,
+       seed:[{w:9.1,r:8},{w:9.1,r:8},{w:9.1,r:8}],po:'9.1kg×8 on all 3. Stay here until you hit 10'},
+      {id:'db_arm_curl',name:'DB arm curl',prescribed:'S1/2/3: 8-10 reps at 14kg',superset:false,
+       seed:[{w:14,r:8},{w:14,r:6},{w:12,r:10}],po:'14kg×8, 14kg×6, then 12kg×10. Goal: all 3 sets at 14kg for 8 reps'},
     ]
   },
   {
     id:'s2', label:'S2', title:'Lower body — day 1',
     exercises:[
-      {id:'goblet_squat',name:'Goblet squat (DB or KB)',prescribed:'S1/2/3/4: 10 reps. Start around 12-16kg',superset:false,sets:4,
-       seed:[],po:'Weight held at your chest, so nothing sits on your spine. Add 2kg when all 4 sets hit 10. If the gym has a hack squat or belt squat machine, swap to that once dumbbells get too heavy to hold'},
-      {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 8 reps at 100kg',superset:false,sets:4,
-       seed:[],po:'100kg×8 all 4 sets. Add 5kg when it feels controlled'},
-      {id:'hip_abductor_s2',name:'Hip abductor',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
-      {id:'leg_curl',name:'Leg curl machine',prescribed:'S1/2/3: 12 reps at 23kg',superset:false,
-       seed:[],po:'Add 2kg when you can hit 14 reps on set 1'},
-      {id:'calf_raise_machine',name:'Calf raises',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Add weight when all 3 sets hit 12+ reps'},
-      {id:'leg_raise_floor',name:'Leg raises on chair',prescribed:'S1/2/3: 12 reps bodyweight',superset:false,
-       seed:[],po:'Aim for 15 reps before adding ankle weights'},
+      {id:'goblet_squat',name:'Goblet squat (DB or KB)',prescribed:'S1/2/3/4: 10 reps. Start around 14-16kg',superset:false,sets:4,
+       seed:[],po:'New, replaces Smith squat (you were at 35kg×10 on that). Weight held at your chest, so nothing sits on your spine. Add 2kg when all 4 sets hit 10. If the gym has a hack squat or belt squat machine, swap to that once dumbbells get too heavy to hold'},
+      {id:'leg_press',name:'Incline leg press',prescribed:'S1/2/3/4: 10 reps at 70kg',superset:false,sets:4,
+       seed:[{w:70,r:10},{w:70,r:10},{w:70,r:10},{w:70,r:10}],po:'70kg×10 on all 4 for three weeks running. Try 75kg'},
+      {id:'hip_abductor_s2',name:'Hip abductor',prescribed:'S1/2/3: 10-12 reps at 31.3kg',superset:false,
+       seed:[{w:31.3,r:10},{w:31.3,r:10},{w:31.3,r:10}],po:'31.3kg×10 for weeks. Push to 12 reps, then go up a plate'},
+      {id:'leg_curl',name:'Leg curl machine',prescribed:'S1/2/3: 10-12 reps at 31.3kg',superset:false,
+       seed:[{w:31.3,r:10},{w:31.3,r:10},{w:31.3,r:10}],po:'31.3kg×10 on all 3. Aim for 12, then go heavier'},
+      {id:'calf_raise_machine',name:'Calf raises',prescribed:'S1/2/3: 12 reps at 20kg',superset:false,
+       seed:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],po:'20kg×10 on all 3. Aim for 12 before adding weight'},
+      {id:'leg_raise_floor',name:'Leg raises on chair',prescribed:'S1/2/3: 10-12 reps bodyweight',superset:false,
+       seed:[{w:0,r:8},{w:0,r:10},{w:0,r:3}],po:'Back glued to the floor. Aim for 10 on all 3'},
+    ],
+    legacy:[
+      {id:'smith_squat',name:'Smith machine back squat',sets:4},
+      {id:'hip_adductor_s2',name:'Hip adductor'},
     ]
   },
   {
-    id:'s3', label:'S3', title:'Cardio / core',
+    id:'s3', label:'S3', title:'Cardio / core', aliases:['Cardio / abs'],
     exercises:[
       {id:'bike',name:'Bike — 20 min',prescribed:'20 min. Log the highest and lowest resistance level you used',superset:false,sets:1,
        fields:[{k:'max',label:'max res',step:'1'},{k:'min',label:'min res',step:'1'}],
-       seed:[],po:'Try to raise your max or your min by 1 level each week'},
+       seed:[{max:3,min:2}],po:'Last time level 3 dropping to 2. Try to hold 3 the whole way, then go to 4'},
       {id:'stepper',name:'Stair stepper — 10 min',prescribed:'10 min. Log the step speed level and total steps',superset:false,sets:1,
        fields:[{k:'lvl',label:'speed lvl',step:'1'},{k:'steps',label:'total steps',step:'1'}],
        seed:[],po:'Beat last week\'s total steps. Hands off the rails if you can'},
@@ -368,52 +372,63 @@ const SESSIONS = [
        seed:[],po:'Lower back stays pressed down. Slow on the way down'},
       {id:'plank',name:'Plank',prescribed:'S1/2/3: hold as long as you can. Log plate weight on your back (0 if none)',superset:false,
        fields:[{k:'w',label:'kg',step:'0.5'},{k:'s',label:'sec',step:'1'}],
-       seed:[],po:'Once you hold 60 sec on all 3, add a 5kg plate on your back'},
+       seed:[{w:0,s:60},{w:0,s:60},{w:0,s:60}],po:'You already hit 60 sec. Add a 5kg plate on your back'},
       {id:'pallof',name:'Pallof press',prescribed:'S1/2/3: 10 reps each side at 9.1kg',superset:false,
        seed:[],po:'Add weight when all 3 sets feel solid without your hips twisting'},
       {id:'farmer_carry',name:'Farmer carry (optional)',prescribed:'S1/2/3: walk holding heavy DBs, log kg each hand and seconds',superset:false,
        fields:[{k:'w',label:'kg',step:'0.5'},{k:'s',label:'sec',step:'1'}],
-       seed:[],po:'Builds grip for your dead hang and works the whole core. Aim for 40 sec, then go heavier'},
+       seed:[],po:'Builds grip for your dead hang and works the whole core. Start with 10kg each hand, aim for 40 sec, then go heavier'},
+    ],
+    legacy:[
+      {id:'treadmill',name:'Treadmill',kind:'treadmill'},
+      {id:'abs',name:'Abs circuit',kind:'abs'},
     ]
   },
   {
     id:'s4', label:'S4', title:'Upper body — day 2',
     exercises:[
-      {id:'chest_press_s4',name:'Chest press',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Find a weight you can do for 12 clean reps, then log it'},
-      {id:'single_row',name:'Single arm DB row',prescribed:'S1/2/3: 10 reps each arm at 9kg',superset:false,
-       seed:[],po:'Move to 10kg when all 3 sets feel strong on both arms'},
-      {id:'arnold',name:'DB Arnold press',prescribed:'S1/2/3: 10 reps at 4kg',superset:false,
-       seed:[],po:'Go to 5kg when the rotation stays controlled throughout all reps'},
-      {id:'lat_wide',name:'Lat pulldown wide grip',prescribed:'S1/2/3: 10 reps at 20kg',superset:false,
-       seed:[],po:'Add 2.5kg when all 3 sets hit 12+ reps'},
-      {id:'db_rear_delt',name:'Machine rear delt fly',prescribed:'S1/2/3: 12 reps at 3kg',superset:false,
-       seed:[],po:'Light by design. Focus on squeeze. Go to 4kg when form is perfect'},
-      {id:'hammer_curl',name:'Hammer curl',prescribed:'S1/2/3: 12 reps at 5kg',superset:false,
-       seed:[],po:'Go to 6kg when all 3 sets hit 14+ reps'},
-      {id:'oh_tricep',name:'Overhead cable tricep extension',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Replaces bench dips (hard on the shoulders). Add weight when all 3 sets hit 12'},
+      {id:'chest_press_s4',name:'Chest press',prescribed:'S1/2/3: 10 reps at 20.3kg',superset:false,
+       seed:[{w:19.1,r:10},{w:20.3,r:10},{w:20.3,r:10}],po:'Started set 1 at 19.1kg. Do all 3 sets at 20.3kg this time'},
+      {id:'single_row',name:'Single arm DB row',prescribed:'S1/2/3: 10 reps each arm at 10kg',superset:false,
+       seed:[{w:10,r:10},{w:10,r:10},{w:10,r:10}],po:'10kg×10 for three weeks. Try 12kg on set 1 (straps if grip gives out)'},
+      {id:'arnold',name:'DB Arnold press',prescribed:'S1/2/3: 10 reps at 14kg',superset:false,
+       seed:[{w:14,r:10},{w:14,r:10},{w:14,r:10}],po:'14kg×10 on all 3. Push for 12, then go up'},
+      {id:'lat_wide',name:'Lat pulldown wide grip',prescribed:'S1/2/3: 10 reps at 29kg',superset:false,
+       seed:[{w:29,r:10},{w:29,r:10},{w:29,r:8}],po:'29kg×10,10,8. Get set 3 to 10'},
+      {id:'db_rear_delt',name:'Machine rear delt fly',prescribed:'S1/2/3: 10-12 reps at 16.3kg',superset:false,
+       seed:[{w:15.1,r:10},{w:16.3,r:10},{w:16.3,r:10}],po:'Do all 3 sets at 16.3kg this time'},
+      {id:'hammer_curl',name:'Hammer curl',prescribed:'S1/2/3: 8-10 reps at 14kg',superset:false,
+       seed:[{w:14,r:8},{w:14,r:8},{w:14,r:9}],po:'14kg×8,8,9. Stay here until all 3 hit 10'},
+      {id:'oh_tricep',name:'Overhead cable tricep extension',prescribed:'S1/2/3: 12 reps. Start around 6.8kg',superset:false,
+       seed:[],po:'New, replaces bench dips (hard on the shoulders; you were at 18 bodyweight reps). Add weight when all 3 sets hit 12'},
+    ],
+    legacy:[
+      {id:'bench_dips',name:'Bench dips'},
     ]
   },
   {
     id:'s5', label:'S5', title:'Lower body — day 2',
     exercises:[
-      {id:'hip_thrust',name:'Hip thrust machine',prescribed:'S1: 30kg / S2-4: 35kg',superset:false,
-       seed:[{w:20,r:10},{w:35,r:10},{w:35,r:10}],po:'35kg×10 all sets — try 37.5kg for sets 2-4 next session'},
-      {id:'bulgarian',name:'Bulgarian split squat',prescribed:'S1/2/3: 10 reps each leg at 9kg',superset:false,
-       seed:[{w:9,r:10},{w:9,r:10},{w:9,r:10}],po:'9kg all sets — move to 10kg next session'},
-      {id:'kb_rdl',name:'KB / DB Romanian deadlift',prescribed:'S1/2/3: 10 reps. Start at 12kg, work up to 16-20kg',superset:false,
-       seed:[],po:'RDL on its own now (no squat). You did 8kg×12 on the combo, so go heavier. Add 2kg when all 3 sets hit 10. If grip gives out first, use lifting straps'},
-      {id:'leg_ext',name:'Leg extension machine',prescribed:'S1/2/3: 15 reps at 14kg',superset:false,
-       seed:[{w:20,r:10},{w:20,r:10},{w:20,r:10}],po:'You are above prescribed at 20kg. Push for 12-15 reps at 20kg'},
-      {id:'leg_raise_chair_s5',name:'Leg raises on chair',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Aim for 15 reps before adding ankle weights'},
-      {id:'hip_abductor_s5',name:'Hip abductor',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
-      {id:'hip_adductor_s5',name:'Hip adductor',prescribed:'S1/2/3: 12 reps',superset:false,
-       seed:[],po:'Add weight when all 3 sets hit 12 controlled reps'},
+      {id:'hip_thrust',name:'Hip thrust machine',prescribed:'S1/2/3: 10 reps at 25kg',superset:false,
+       seed:[{w:25,r:10},{w:25,r:10},{w:25,r:10}],po:'25kg×10 on all 3. Try 27.5kg'},
+      {id:'bulgarian',name:'Bulgarian split squat',prescribed:'S1/2/3: 10 reps each leg at 10kg',superset:false,
+       seed:[{w:10,r:10},{w:10,r:10},{w:10,r:10}],po:'10kg×10 on all 3. Push for 12 before going heavier'},
+      {id:'kb_rdl',name:'KB / DB Romanian deadlift',prescribed:'S1/2/3: 10 reps. Start at 14-16kg',superset:false,
+       seed:[],po:'New, RDL on its own (you were at 12kg×10 on the RDL to squat combo). Add 2kg when all 3 sets hit 10. If grip gives out first, use lifting straps'},
+      {id:'leg_ext',name:'Leg extension machine',prescribed:'S1/2/3: 10-12 reps at 38.3kg',superset:false,
+       seed:[{w:38.3,r:10},{w:38.3,r:10},{w:38.3,r:10}],po:'38.3kg×10 on all 3. Aim for 12 before going up'},
+      {id:'leg_raise_chair_s5',name:'Leg raises on chair',prescribed:'S1/2/3: 10-12 reps',superset:false,
+       seed:[{w:0,r:10},{w:0,r:10},{w:0,r:10}],po:'Aim for 12 reps, then 15 before adding ankle weights'},
+      {id:'hip_abductor_s5',name:'Hip abductor',prescribed:'S1/2/3: 10-12 reps at 31.3kg',superset:false,
+       seed:[{w:31.3,r:10},{w:31.3,r:10},{w:31.3,r:10}],po:'Push to 12 reps, then go up a plate'},
+      {id:'hip_adductor_s5',name:'Hip adductor',prescribed:'S1/2/3: 10-12 reps at 25.3kg',superset:false,
+       seed:[{w:25.3,r:10},{w:25.3,r:10},{w:25.3,r:10}],po:'25.3kg×10 on all 3. Push to 12, then go up'},
       {id:'cable_kickback',name:'Cable glute kickback',prescribed:'S1/2/3: 12 reps each leg',superset:false,
-       seed:[],po:'Replaces wall sit. Squeeze at the top, no swinging. Add weight when all 3 sets hit 12'},
+       seed:[],po:'New, replaces wall sit. Squeeze at the top, no swinging. Add weight when all 3 sets hit 12'},
+    ],
+    legacy:[
+      {id:'rdl_squat',name:'KB RDL to squat'},
+      {id:'wall_sit',name:'Wall sit'},
     ]
   }
 ];
@@ -426,6 +441,37 @@ const HANG = {id:'dead_hang',name:'Dead hang (optional)',prescribed:'Hang from t
   fields:[{k:'s',label:'sec',step:'1'}],seed:[],po:''};
 const HANG_BASELINE = 24;
 const exercisesOf = sess => sess.exercises.concat([HANG]);
+const legacyOf = sess => sess.legacy || [];
+const findSession = title => SESSIONS.find(s => s.title === title || (s.aliases || []).includes(title));
+
+// Most recent earlier week that has data for this exercise, so a skipped week never hides your numbers
+function lastLogged(sessionId, ex) {
+  const fields = fieldsOf(ex);
+  const cur = getWeekKey(currentWeek);
+  const keys = Object.keys(allData).filter(k => k < cur).sort().reverse();
+  for (const k of keys) {
+    const sids = ex.id === HANG.id ? SESSIONS.map(s => s.id) : [sessionId];
+    for (const sid of sids) {
+      const ed = ((allData[k] || {})[sid] || {})[ex.id];
+      if (ed && (ed.sets || []).some(x => x && fields.some(f => x[f.k]))) return { week: k, sets: ed.sets };
+    }
+  }
+  return null;
+}
+
+// One-time copy: hangs you logged under "Wall sit" become dead hang entries (wall sit record is kept)
+function migrateHangs() {
+  let changed = false;
+  Object.values(allData).forEach(wk => {
+    const s5 = wk && wk.s5;
+    const ws = s5 && s5.wall_sit;
+    if (ws && /hang/i.test(ws.note || '') && !s5.dead_hang) {
+      s5.dead_hang = { sets: (ws.sets || []).map(x => ({ s: x.r || '' })), note: 'Copied from wall sit log' };
+      changed = true;
+    }
+  });
+  if (changed) saveData();
+}
 
 function bestHang() {
   let best = HANG_BASELINE;
@@ -504,7 +550,6 @@ function val(id) { const el = v(id); return el ? el.value : ''; }
 
 function renderSession() {
   const sess = SESSIONS.find(s => s.id === activeSession);
-  const prevData = getSD(currentWeek - 1, activeSession);
   const currData = getSD(currentWeek, activeSession);
   const isCurrentWeek = currentWeek === 0;
   let html = '';
@@ -515,11 +560,11 @@ function renderSession() {
     const fields = fieldsOf(ex);
     const cd = currData[ex.id] || {};
     const sets = cd.sets || [];
-    const pd = prevData[ex.id] || {};
-    const psets = pd.sets || [];
+    const last = lastLogged(activeSession, ex);
+    const psets = last ? last.sets : [];
     const hasSeed = ex.seed && ex.seed.length > 0;
     const filled = x => x && fields.some(f => x[f.k]);
-    const hasPrev = psets.some(filled);
+    const hasPrev = !!last;
 
     if (ex.id === HANG.id) html += `<div class="section-title">Pull-up progress</div>`;
     else if (idx === 0 || list[idx-1].superset !== ex.superset)
@@ -533,7 +578,7 @@ function renderSession() {
       <div class="prescribed">${ex.prescribed}</div>`;
 
     html += `<div class="set-section">
-      <div class="set-section-label">Last session</div>
+      <div class="set-section-label">Last session${last ? ' · week of ' + last.week : ''}</div>
       <div class="last-sets">`;
     for (let i = 0; i < setCount(ex); i++) {
       let vals = fields.map(() => '—');
@@ -570,6 +615,20 @@ function renderSession() {
     </div>`;
   });
 
+  const legacyHere = legacyOf(sess).filter(ex => currData[ex.id]);
+  if (legacyHere.length) {
+    html += `<div class="section-title">Old exercises (history)</div>`;
+    legacyHere.forEach(ex => {
+      const d = currData[ex.id];
+      let body = '';
+      if (ex.kind === 'treadmill') body = `${d.type||''} ${d.duration?d.duration+' min':''} · speed ${d.speed||'—'} · ${d.distance||'—'} km`;
+      else if (ex.kind === 'abs') body = `${d.rounds||'—'} rounds · plank ${d.plank||'?'} sec`;
+      else body = (d.sets || []).filter(x => x && (x.w || x.r)).map((x,i) => `Set ${i+1}: ${x.w||0}×${x.r||'—'}`).join('<br>');
+      html += `<div class="ex-card"><div class="ex-header"><span class="ex-name">${ex.name}</span></div>
+        <div class="prescribed">${body || '—'}${d.note ? '<br>' + d.note : ''}</div><div style="height:12px"></div></div>`;
+    });
+  }
+
   document.getElementById('content').innerHTML =
     document.getElementById('install-banner').outerHTML + html;
 
@@ -579,7 +638,7 @@ function renderSession() {
 
 function saveSession() {
   const sess = SESSIONS.find(s => s.id === activeSession);
-  const data = {};
+  const data = Object.assign({}, getSD(currentWeek, activeSession));
   exercisesOf(sess).forEach(ex => {
     const sets = [];
     for (let i = 0; i < setCount(ex); i++) {
@@ -595,7 +654,11 @@ function saveSession() {
 
 function clearSession() {
   if (!confirm('Clear all entries for this session?')) return;
-  setSD(currentWeek, activeSession, {});
+  const sess = SESSIONS.find(s => s.id === activeSession);
+  const kept = {};
+  const cd = getSD(currentWeek, activeSession);
+  legacyOf(sess).forEach(ex => { if (cd[ex.id]) kept[ex.id] = cd[ex.id]; });
+  setSD(currentWeek, activeSession, kept);
   renderSession();
   showToast('Cleared');
 }
@@ -616,7 +679,13 @@ function exportCSV() {
       const sess = SESSIONS.find(s => s.id === sessId);
       if (!sess) return;
       const sd = sessData[sessId];
-      exercisesOf(sess).forEach(ex => {
+      legacyOf(sess).forEach(ex => {
+        const d = sd[ex.id];
+        if (!d) return;
+        if (ex.kind === 'treadmill') rows.push([wk, sess.title, ex.name, '1', d.speed||'', d.distance||'', '', `${d.type||''} ${d.duration||''}min ${d.note||''}`]);
+        else if (ex.kind === 'abs') rows.push([wk, sess.title, ex.name, '1', '', (d.rounds||'')+' rounds', '', `plank ${d.plank||'?'}s`]);
+      });
+      exercisesOf(sess).concat(legacyOf(sess).filter(x => !x.kind)).forEach(ex => {
         const ed = sd[ex.id] || {};
         (ed.sets || []).forEach((st, i) => {
           if (!Object.values(st).some(x => x)) return;
@@ -654,13 +723,23 @@ function importCSV(e) {
       const other = hasOther ? clean[6] : '';
       const notes = hasOther ? clean[7] : clean[6];
       if (!wk || !sessTitle) return;
-      const sess = SESSIONS.find(s => s.title === sessTitle);
+      const sess = findSession(sessTitle);
       if (!sess) return;
       if (!allData[wk]) allData[wk] = {};
       if (!allData[wk][sess.id]) allData[wk][sess.id] = {};
       const sd = allData[wk][sess.id];
-      const ex = exercisesOf(sess).find(x => x.name === exName);
+      const ex = exercisesOf(sess).concat(legacyOf(sess)).find(x => x.name === exName);
       if (!ex) return;
+      if (ex.kind === 'treadmill') {
+        const m = (notes || '').match(/^(W1 sprints|W2 jog)?\s*(\d+)?\s*min\s*(.*)$/);
+        sd[ex.id] = { type: m && m[1] || '', duration: m && m[2] || '', speed: weight, distance: reps, note: m ? m[3].trim() : (notes || '') };
+        imported++; return;
+      }
+      if (ex.kind === 'abs') {
+        const pm = (notes || '').match(/plank (\S+?)s/);
+        sd[ex.id] = { rounds: (reps || '').replace(' rounds', ''), plank: pm && pm[1] !== '?' ? pm[1] : '' };
+        imported++; return;
+      }
       if (!sd[ex.id]) sd[ex.id] = { sets: [], note: '' };
       const si = parseInt(setNum) - 1;
       if (si >= 0 && si < setCount(ex)) {
@@ -674,6 +753,7 @@ function importCSV(e) {
       imported++;
     });
     saveData();
+    migrateHangs();
     renderSession();
     showToast(`Imported ${imported} rows`);
     e.target.value = '';
@@ -732,6 +812,7 @@ window.addEventListener('appinstalled', () => { deferredPrompt = null; checkInst
 /* ---- INIT ---- */
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 loadData();
+migrateHangs();
 document.getElementById('week-label').textContent = getWeekLabel(0);
 renderTabs();
 renderSession();

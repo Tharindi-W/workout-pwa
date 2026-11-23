@@ -89,8 +89,8 @@ All data is stored in the browser's `localStorage`. Use the in-app menu (⋮) to
 | Session 1 | Upper body day 1 — bench, shoulder press, lat pulldown, rear delt, supersets |
 | Session 2 | Lower body day 1 — goblet squat, leg press, hip abductor, leg curl, calves |
 | Session 3 | Cardio + core — 20 min bike, 10 min stair stepper, leg raises, planks, Pallof press, optional farmer carry |
-| Session 4 | Upper body day 2 — chest press, rows, Arnold press, pulldown, curls, overhead tricep extension |
-| Session 5 | Lower body day 2 — hip thrust, Bulgarian split squat, RDL, leg extension, hip abductor/adductor, cable kickback |
+| Session 4 | Upper body day 2 — chest press, rows, Arnold press, pulldown, curls, lying DB tricep extension |
+| Session 5 | Lower body day 2 — hip thrust, Bulgarian split squat, RDL, leg extension, hip abductor/adductor, DB step-up |
 
 Every session also has an optional **dead hang** tracker (seconds per attempt, goal 60 sec) toward a first pull-up.
 
